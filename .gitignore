@@ -19,3 +19,4 @@ node_modules/
 htmlcov
 adminsortable2/static/adminsortable2/js/adminsortable2.*
 adminsortable2/templates/adminsortable2/edit_inline
+venv/

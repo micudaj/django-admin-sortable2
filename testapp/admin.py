@@ -5,6 +5,8 @@ from adminsortable2.admin import SortableAdminBase, SortableAdminMixin, Sortable
 
 from testapp.models import Author, Chapter, Chapter1, Chapter2, Book, Book1, Book2
 
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ['name']
@@ -41,7 +43,6 @@ class ChapterTabularInline(SortableTabularInline):
 class SortableBookAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_per_page = 12
     list_display = ['title', 'author', 'my_order']
-
 
 class UpOrderedSortableBookAdmin(SortableBookAdmin):
     inlines = [ChapterStackedInlineUpOrdered]
@@ -130,9 +131,18 @@ class BookAdminSite(admin.AdminSite):
         return app_list
 
 
+class BookResource(resources.ModelResource):
+
+    class Meta:
+        model = Book
+
+class BookAdmin(SortableAdminMixin, ImportExportModelAdmin):
+    resource_classes = [BookResource]
+
+
 admin.site = BookAdminSite()
 admin.site.register(Author, AuthorAdmin)
-admin.site.register(Book1, SortableBookAdmin, infix=0)
+admin.site.register(Book1, BookAdmin, infix=0)
 admin.site.register(Book1, SortableBookAdminStacked, name="Books (ordered by model, stacked inlines)", infix=1)
 admin.site.register(Book2, SortableBookAdminStackedReversed, name="Books (reverse ordered by model, stacked inlines)", infix=2)
 admin.site.register(Book, UpOrderedSortableBookAdmin, name="Books (ordered by admin, stacked inlines)", infix=3)

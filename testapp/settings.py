@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'adminsortable2',
     'testapp',
+    'import_export'
 ]
 
 DATABASES = {
@@ -50,6 +51,7 @@ SILENCED_SYSTEM_CHECKS = ['admin.E408']
 
 # URL that handles the static files served from STATIC_ROOT.
 # Example: "http://media.lawrence.com/static/"
+STATIC_ROOT = 'static/'
 STATIC_URL = '/static/'
 
 TEMPLATES = [{
